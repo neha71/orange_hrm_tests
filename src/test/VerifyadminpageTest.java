@@ -1,4 +1,4 @@
-package testpfClasses;
+package test;
 
 public class VerifyadminpageTest {
 	
