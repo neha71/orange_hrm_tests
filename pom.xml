@@ -33,13 +33,12 @@
 			<version>7.8.0</version>
 		</dependency>
 
-		<!--
+		<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
 		<dependency>
-			<groupId>TestNGTutorial</groupId>
-			<artifactId>TestNGTutorial</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>5.0.9</version>
 		</dependency>
-		-->
 
 		<!--
 		https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
