@@ -1,4 +1,4 @@
-package test;
+package test.org.orangeTests;
 
 public class VerifyleavepageTest {
 

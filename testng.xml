@@ -3,7 +3,7 @@
 <suite name="Suite">
   <test thread-count="5" name="Test">
     <classes>
-      <class name="testpfClasses.VerifyloginpageTest"/>
+      <class name="test.org.orangeTests.VerifyloginpageTest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
