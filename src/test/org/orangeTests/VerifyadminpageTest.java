@@ -37,6 +37,7 @@ public class VerifyadminpageTest {
 		extent.attachReporter(spark);
 	}
 
+
 	@Parameters("BrowserType")
 	@BeforeMethod
 	public void setupBeforeEachTest(String sBrowserType) {
