@@ -4,10 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentReports;
@@ -31,9 +33,15 @@ public class VerifyloginpageTest {
 		extent.attachReporter(spark);
 	}
 
+	@Parameters("BrowserType")
 	@BeforeMethod
-	public void setupBeforeEachTest() {
-		driver = new ChromeDriver();
+	public void setupBeforeEachTest(String sBrowserType) {
+		if (sBrowserType.equals("chrome")) {
+			driver = new ChromeDriver();
+		} else if (sBrowserType.equals("firefox")) {
+			driver = new FirefoxDriver();
+		}
+
 		baseUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
 
 		// Create an object for the Page Class

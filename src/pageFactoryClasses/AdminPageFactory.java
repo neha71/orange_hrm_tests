@@ -1,16 +1,12 @@
 package pageFactoryClasses;
 
-import java.time.Duration;
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AdminPageFactory {
 
@@ -51,22 +47,22 @@ public class AdminPageFactory {
 	@FindBy(xpath = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[3]/button[2]")
 	private WebElement saveButton;
 
-	@FindBy(xpath = "//*[@id=\"oxd-toaster_1\"]/div/div[1]/div[2]/p[1]")
+	@FindBy(xpath = "(//p[@class='oxd-text oxd-text--p oxd-text--toast-title oxd-toast-content-text'])")
 	private WebElement result;
-	
+
 	/* Search Page elements */
 	@FindBy(xpath = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div[1]/div[2]/form/div[1]/div/div[1]/div/div[2]/input")
 	private WebElement userNameSearchPage;
-	
+
 	@FindBy(xpath = "//*[@type='submit' and contains(., \"Search\")]")
 	private WebElement searchButton;
-	
+
 	@FindBy(xpath = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div[2]/div[2]/div/span")
 	private WebElement searchResultHeader;
-	
+
 	@FindBy(xpath = "(//i[@class='oxd-icon bi-trash'])[1]")
 	private WebElement deleteRecord;
-	
+
 	@FindBy(xpath = "//*[@id=\"app\"]/div[3]/div/div/div/div[3]/button[2]")
 	private WebElement confirmDelete;
 
@@ -122,20 +118,20 @@ public class AdminPageFactory {
 	public boolean isResultSuccess() {
 		return "success".equalsIgnoreCase(result.getText());
 	}
-		
+
 	public void enterUserNameSearchPage(String userName) {
 		this.userNameSearchPage.sendKeys(userName);
 	}
-	
+
 	public void clickSearchButton() {
 		searchButton.click();
 	}
-	
+
 	public void deleteSearchedRecord() {
 		deleteRecord.click();
 		confirmDelete.click();
 	}
-	
+
 	public boolean isSearchSuccessful() {
 		return "(1) record found".equalsIgnoreCase(searchResultHeader.getText());
 	}
