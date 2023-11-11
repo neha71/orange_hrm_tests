@@ -5,6 +5,7 @@
 		<classes>
 			<class name="test.org.orangeTests.VerifyloginpageTest" />
 			<class name="test.org.orangeTests.VerifyadminpageTest" />
+			<class name="test.org.orangeTests.VerifyleavepageTest" />
 		</classes>
 	</test> <!--
 	Test -->
