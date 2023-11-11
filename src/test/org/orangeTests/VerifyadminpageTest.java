@@ -84,6 +84,21 @@ public class VerifyadminpageTest {
 		extent.createTest("VerifyadminpageTest.searchExistingUser").log(Status.PASS, "VerifyadminpageTest.searchExistingUser Passed!");
 		log.info("VerifyadminpageTest.searchExistingUser passed");
 	}
+	
+	@Test(priority = 3)
+	public void deleteSearchedUser() throws InterruptedException {
+		adminPage.enterUserNameSearchPage(TEST_USERNAME);
+		adminPage.clickSearchButton();
+
+		Thread.sleep(1000); // wait for the results
+		Assert.assertTrue(adminPage.isSearchSuccessful());
+		
+		adminPage.deleteSearchedRecord();
+		Assert.assertTrue(adminPage.isResultSuccess());
+		
+		extent.createTest("VerifyadminpageTest.deleteSearchedUser").log(Status.PASS, "VerifyadminpageTest.deleteSearchedUser Passed!");
+		log.info("VerifyadminpageTest.deleteSearchedUser passed");
+	}
 
 	@AfterMethod
 	public void tearDown() throws InterruptedException {

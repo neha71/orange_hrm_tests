@@ -63,6 +63,12 @@ public class AdminPageFactory {
 	
 	@FindBy(xpath = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div[2]/div[2]/div/span")
 	private WebElement searchResultHeader;
+	
+	@FindBy(xpath = "(//i[@class='oxd-icon bi-trash'])[1]")
+	private WebElement deleteRecord;
+	
+	@FindBy(xpath = "//*[@id=\"app\"]/div[3]/div/div/div/div[3]/button[2]")
+	private WebElement confirmDelete;
 
 	Actions actions;
 
@@ -123,6 +129,11 @@ public class AdminPageFactory {
 	
 	public void clickSearchButton() {
 		searchButton.click();
+	}
+	
+	public void deleteSearchedRecord() {
+		deleteRecord.click();
+		confirmDelete.click();
 	}
 	
 	public boolean isSearchSuccessful() {
