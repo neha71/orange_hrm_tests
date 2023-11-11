@@ -26,6 +26,7 @@ public class VerifyadminpageTest {
 	LoginPageFactory loginPage;
 	private ExtentReports extent;
 	private static final Logger log = LogManager.getLogger(VerifyloginpageTest.class.getName());
+	private String TEST_USERNAME = "kneha" + System.currentTimeMillis();
 
 	@BeforeClass
 	public void setup() {
@@ -42,40 +43,48 @@ public class VerifyadminpageTest {
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofMillis(10000));
 		driver.get(baseUrl);
-		
+
 		// Login to reach the admin page
 		loginPage = new LoginPageFactory(driver);
 		loginPage.enterUserNameCode("Admin");
 		loginPage.enterPasswordInputCode("admin123");
 		loginPage.clickLoginButton();
-		
-		// Create an object for Admin Page, click admin tab and then add employee button
+
+		// Create an object for Admin Page and click admin tab
 		adminPage = new AdminPageFactory(driver);
 		adminPage.clickAdminTab();
-		adminPage.clickAddEmployee();
 	}
-	
+
 	@Test(priority = 1)
 	public void addNewUser() throws InterruptedException {
+		/* Navigate to the add employee page */
+		adminPage.clickAddEmployee();
+		
+		/* Enter employee details */
 		adminPage.selectUserRole();
-		adminPage.selectStatus();
-		adminPage.enterUserName("kneha");
-		adminPage.enterEmpName("Test 90  Collings");
+		adminPage.enterUserNameAddPage(TEST_USERNAME);
 		adminPage.enterPasswords("blahblahTemp1");
-		/*
-		loginPage.enterUserNameCode("Admin");
-		loginPage.enterPasswordInputCode("admin123");
-		loginPage.clickLoginButton();
-		boolean actual_adminText = loginPage.findDashBorad();
-		Assert.assertTrue(actual_adminText);
-		extent.createTest("VerifyloginpageTest.validCredentials").log(Status.PASS,
-				"VerifyloginpageTest.validCredentials Passed!");
+		adminPage.selectStatus();
+		adminPage.enterEmpName("Li");
+		adminPage.clickSaveButton();
 
-		log.info("Got the stuff done");
-		log.debug("Got debug stuff done");
-		*/
+		Assert.assertTrue(adminPage.isResultSuccess());
+		extent.createTest("VerifyadminpageTest.addNewUser").log(Status.PASS, "VerifyadminpageTest.addNewUser Passed!");
+
+		log.info("VerifyadminpageTest.addNewUser passed");
 	}
 	
+	@Test(priority = 2)
+	public void searchExistingUser() throws InterruptedException {
+		adminPage.enterUserNameSearchPage(TEST_USERNAME);
+		adminPage.clickSearchButton();
+
+		Thread.sleep(1000); // wait for the results
+		Assert.assertTrue(adminPage.isSearchSuccessful());
+		extent.createTest("VerifyadminpageTest.searchExistingUser").log(Status.PASS, "VerifyadminpageTest.searchExistingUser Passed!");
+		log.info("VerifyadminpageTest.searchExistingUser passed");
+	}
+
 	@AfterMethod
 	public void tearDown() throws InterruptedException {
 		extent.flush();
@@ -83,4 +92,3 @@ public class VerifyadminpageTest {
 		driver.quit();
 	}
 }
-
