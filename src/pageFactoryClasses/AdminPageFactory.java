@@ -138,6 +138,6 @@ public class AdminPageFactory {
 	}
 
 	public boolean isSearchSuccessful() {
-		return "(1) record found".equalsIgnoreCase(searchResultHeader.getText());
+		return !"No record found".equalsIgnoreCase(searchResultHeader.getText());
 	}
 }

@@ -6,17 +6,21 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import pageFactoryClasses.LoginPageFactory;
+
 import java.time.Duration;
 
 public class VerifyloginpageTest {
@@ -26,16 +30,10 @@ public class VerifyloginpageTest {
 	private ExtentReports extent;
 	private static final Logger log = LogManager.getLogger(VerifyloginpageTest.class.getName());
 
-	@BeforeClass
-	public void setup() {
-		extent = new ExtentReports();
-		ExtentSparkReporter spark = new ExtentSparkReporter("target/sparkReport.html");
-		extent.attachReporter(spark);
-	}
-
 	@Parameters("BrowserType")
-	@BeforeMethod
-	public void setupBeforeEachTest(String sBrowserType) {
+	@BeforeClass
+	public void setup(String sBrowserType) {
+		extent = ExtentManager.createExtentReports();
 		if (sBrowserType.equals("chrome")) {
 			driver = new ChromeDriver();
 		} else if (sBrowserType.equals("firefox")) {
@@ -49,53 +47,69 @@ public class VerifyloginpageTest {
 
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofMillis(10000));
+	}
+
+	@BeforeMethod
+	public void setupBeforeEachTest() throws InterruptedException {
 		driver.get(baseUrl);
 	}
 
 	// To verify login is successful
 	@Test(priority = 1)
-	public void validCredentials() throws InterruptedException {
+	public void validCredentials() {
 		loginPage.enterUserNameCode("Admin");
 		loginPage.enterPasswordInputCode("admin123");
 		loginPage.clickLoginButton();
 		boolean actual_adminText = loginPage.findDashBorad();
+		
 		Assert.assertTrue(actual_adminText);
-		extent.createTest("VerifyloginpageTest.validCredentials").log(Status.PASS,
-				"VerifyloginpageTest.validCredentials Passed!");
-
-		log.info("Got the stuff done");
-		log.debug("Got debug stuff done");
+		loginPage.logout();
 	}
 
 	// To verify that error message occur when username is wrong
 	@Test(priority = 2)
-	public void invalidUsername() throws InterruptedException {
+	public void invalidUsername() {
 		loginPage.enterUserNameCode("ad");
 		loginPage.enterPasswordInputCode("admin123");
 		loginPage.clickLoginButton();
 		String actualError = loginPage.findErrorMsg();
 		String expectedError = "Invalid credentials";
+		
 		Assert.assertEquals(actualError, expectedError);
-		extent.createTest("VerifyloginpageTest.invalidUsername").log(Status.PASS,
-				"VerifyloginpageTest.invalidUsername Passed!");
 	}
 
 	// To verify that error message occur when password is wrong
 	@Test(priority = 3)
-	public void invalidPassword() throws InterruptedException {
+	public void invalidPassword() {
 		loginPage.enterUserNameCode("admin");
 		loginPage.enterPasswordInputCode("ad123");
 		loginPage.clickLoginButton();
 		String actualError = loginPage.findErrorMsg();
 		String expectedError = "Invalid credentials";
+		
 		Assert.assertEquals(actualError, expectedError);
-		extent.createTest("VerifyloginpageTest.invalidPassword").log(Status.PASS,
-				"VerifyloginpageTest.invalidPassword Passed!");
+	}
+	
+	@AfterMethod
+	public void logExtentReport(ITestResult result) {
+		String testName = result.getTestClass() + "." + result.getName();
+		ExtentTest extTest = extent.createTest(testName);
+		if (result.isSuccess()) {
+			extTest.log(Status.PASS, "Passed!");
+			log.info(testName + " PASSED");
+		} else {
+			extTest.log(Status.FAIL, "FAILED!");
+			log.error(testName + " FAILED");
+		}
+	}
+	
+	@AfterTest
+	public void flushExtentReport() {
+		extent.flush();
 	}
 
-	@AfterMethod
+	@AfterClass
 	public void tearDown() throws InterruptedException {
-		extent.flush();
 		Thread.sleep(3000);
 		driver.quit();
 	}

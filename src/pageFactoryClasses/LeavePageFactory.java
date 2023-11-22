@@ -28,26 +28,6 @@ public class LeavePageFactory {
 	@FindBy(xpath = "(//div[@role='listbox']//child::div)[4]")
 	private WebElement leaveStatusListElem2;
 	
-	/*
-	@FindBy(xpath = "")
-	private WebElement selectLeaveType;
-	
-	@FindBy(xpath = "")
-	private WebElement leaveTypeListElem2;
-	
-	@FindBy(xpath = "//input[@placeholder='Type for hints...']")
-	private WebElement empName;
-
-	@FindBy(xpath = "//*[@role='listbox']")
-	private List<WebElement> empNameAutoSuggestions;
-	
-	@FindBy(xpath = "")
-	private WebElement selectSubUnit;
-	
-	@FindBy(xpath = "")
-	private WebElement subUnitListElem2;
-	*/
-	
 	@FindBy(xpath = "//input[@placeholder='Type for hints...']")
 	private WebElement empName;
 

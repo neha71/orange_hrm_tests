@@ -1,9 +1,13 @@
 package pageFactoryClasses;
 
+import java.time.Duration;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPageFactory {
 
@@ -25,6 +29,12 @@ public class LoginPageFactory {
 
 	@FindBy(xpath = "//*[@id=\"app\"]/div[1]/div/div[1]/div/div[2]/div[2]/div/div[1]")
 	private WebElement errormsg;
+	
+	@FindBy(xpath = "(//i[@class='oxd-icon bi-caret-down-fill oxd-userdropdown-icon'])[1]")
+	private WebElement userDropDownArrow;
+	
+	@FindBy(partialLinkText = "Logout")
+	private WebElement logoutButton;
 
 	// Constructor to initialize this Class and the Elements
 	public LoginPageFactory(WebDriver driver) {
@@ -47,9 +57,15 @@ public class LoginPageFactory {
 	public void clickLoginButton() {
 		loginButton.click();
 	}
+	
+	public void logout() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		userDropDownArrow.click();
+		wait.until(ExpectedConditions.visibilityOf(logoutButton));
+		logoutButton.click();
+	}
 
 	public String findErrorMsg() {
-
 		String actual_error = errormsg.getText();
 		return actual_error;
 
@@ -58,77 +74,5 @@ public class LoginPageFactory {
 	public boolean findDashBorad() {
 		boolean dashboard_display = dashboard.isDisplayed();
 		return dashboard_display;
-
 	}
-
 }
-
-/*
- * 
- * 
- * 
- * public void clickUserInputField() { usernameInput.click(); }
- * 
- * public void clickPasswordInputField() { passwordInput.click(); }
- * 
- * 
- * public void enterUserNameCode(String userNameCode) { clickUserInputField();
- * usernameInput.sendKeys(userNameCode); }
- * 
- * public void enterPasswordInputCode(String userInputCode) {
- * clickPasswordInputField(); passwordInput.sendKeys(userInputCode); }
- * 
- * 
- * public void clickLoginButton() { loginButton.click(); }
- * 
- * }
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * /*
- * 
- * 
- * 
- * public void clickUsernameInput() { usernameInput.sendKeys(returningDate); }
- * 
- * public void clickDepartField() { passwordInput.click(); }
- * 
- * public void clickArriveField() { loginButton.click(); }
- * 
- * public void enterDepartAirportCode(String departAirportCode) {
- * clickDepartField(); departField.sendKeys(departAirportCode); }
- * 
- * public void enterArriveAirportCode(String arriveAirportCode) {
- * clickArriveField(); arriveField.sendKeys(arriveAirportCode); }
- * 
- * public void enterDepartDate(String departureDate) { departDate.clear();
- * departDate.sendKeys(departureDate); }
- * 
- * public void enterReturnDate(String returningDate) { returnDate.clear();
- * returnDate.sendKeys(returningDate); }
- * 
- * public void clickSubmitButton() { submitButton.click(); }
- * 
- * 
- * 
- * 
- * 
- * }
- */
