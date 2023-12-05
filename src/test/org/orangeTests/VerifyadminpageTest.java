@@ -37,11 +37,7 @@ public class VerifyadminpageTest {
 	@BeforeClass
 	public void setup(String sBrowserType) {
 		extent = ExtentManager.createExtentReports();
-		if (sBrowserType.equals("chrome")) {
-			driver = new ChromeDriver();
-		} else if (sBrowserType.equals("firefox")) {
-			driver = new FirefoxDriver();
-		}
+		driver = DriverManager.fetchDriver(sBrowserType);
 
 		baseUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
 
@@ -120,7 +116,7 @@ public class VerifyadminpageTest {
 
 	@AfterClass
 	public void tearDown() throws InterruptedException {
-		Thread.sleep(3000);
-		driver.quit();
+		Thread.sleep(1000);
+		loginPage.logout();
 	}
 }

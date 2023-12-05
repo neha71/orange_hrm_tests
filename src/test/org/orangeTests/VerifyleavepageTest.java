@@ -37,11 +37,7 @@ public class VerifyleavepageTest {
 	@BeforeClass
 	public void setup(String sBrowserType) {
 		extent = ExtentManager.createExtentReports();
-		if (sBrowserType.equals("chrome")) {
-			driver = new ChromeDriver();
-		} else if (sBrowserType.equals("firefox")) {
-			driver = new FirefoxDriver();
-		}
+		driver = DriverManager.fetchDriver(sBrowserType);
 
 		baseUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
 
@@ -64,7 +60,7 @@ public class VerifyleavepageTest {
 		Thread.sleep(1000);
 	}
 	
-	@Test(priority = 1)
+	@Test(priority = 4)
 	public void searchLeaveWithDefaultDates() throws InterruptedException {
 		leavePage.clickLeaveTab();
 		leavePage.selectLeaveStatus();
@@ -75,7 +71,7 @@ public class VerifyleavepageTest {
 		Assert.assertTrue(leavePage.isSearchSuccessful());
 	}
 	
-	@Test(priority = 2)
+	@Test(priority = 5)
 	public void searchLeaveWithCustomDates() throws InterruptedException {
 		leavePage.clickLeaveTab();
 		leavePage.selectLeaveStatus();
@@ -87,12 +83,12 @@ public class VerifyleavepageTest {
 		Assert.assertTrue(leavePage.isSearchSuccessful());
 	}
 	
-	@Test(priority = 3)
+	@Test(priority = 6)
 	public void searchLeaveWithCustomDatesAndEmployee() throws InterruptedException {
 		leavePage.clickLeaveTab();
 		leavePage.selectLeaveStatus();
 		leavePage.setDates();
-		leavePage.enterEmpName("Li");
+		leavePage.enterEmpName("a");
 		Thread.sleep(1000);
 		leavePage.clickSearchButton();
 		
@@ -120,7 +116,7 @@ public class VerifyleavepageTest {
 
 	@AfterClass
 	public void tearDown() throws InterruptedException {
-		Thread.sleep(3000);
-		driver.quit();
+		Thread.sleep(1000);
+		loginPage.logout();
 	}	
 }

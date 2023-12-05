@@ -34,11 +34,7 @@ public class VerifyloginpageTest {
 	@BeforeClass
 	public void setup(String sBrowserType) {
 		extent = ExtentManager.createExtentReports();
-		if (sBrowserType.equals("chrome")) {
-			driver = new ChromeDriver();
-		} else if (sBrowserType.equals("firefox")) {
-			driver = new FirefoxDriver();
-		}
+		driver = DriverManager.fetchDriver(sBrowserType);
 
 		baseUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
 
@@ -55,7 +51,7 @@ public class VerifyloginpageTest {
 	}
 
 	// To verify login is successful
-	@Test(priority = 1)
+	@Test(priority = 7)
 	public void validCredentials() {
 		loginPage.enterUserNameCode("Admin");
 		loginPage.enterPasswordInputCode("admin123");
@@ -67,7 +63,7 @@ public class VerifyloginpageTest {
 	}
 
 	// To verify that error message occur when username is wrong
-	@Test(priority = 2)
+	@Test(priority = 8)
 	public void invalidUsername() {
 		loginPage.enterUserNameCode("ad");
 		loginPage.enterPasswordInputCode("admin123");
@@ -79,7 +75,7 @@ public class VerifyloginpageTest {
 	}
 
 	// To verify that error message occur when password is wrong
-	@Test(priority = 3)
+	@Test(priority = 9)
 	public void invalidPassword() {
 		loginPage.enterUserNameCode("admin");
 		loginPage.enterPasswordInputCode("ad123");
@@ -110,7 +106,7 @@ public class VerifyloginpageTest {
 
 	@AfterClass
 	public void tearDown() throws InterruptedException {
-		Thread.sleep(3000);
+		Thread.sleep(1000);
 		driver.quit();
 	}
 }
