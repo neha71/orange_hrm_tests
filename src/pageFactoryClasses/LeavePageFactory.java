@@ -74,7 +74,8 @@ public class LeavePageFactory {
 	}
 	
 	public boolean isSearchSuccessful() {
-		return searchResultHeader.getText().toLowerCase().contains("records found");
+		String result = searchResultHeader.getText().toLowerCase();
+		return (result.contains("records found") || result.contains("record found"));
 	}
 	
 }

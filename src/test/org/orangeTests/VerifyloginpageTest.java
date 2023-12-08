@@ -33,7 +33,7 @@ public class VerifyloginpageTest {
 	@Parameters("BrowserType")
 	@BeforeClass
 	public void setup(String sBrowserType) {
-		extent = ExtentManager.createExtentReports();
+		extent = ExtentManager.fetchExtentReport();
 		driver = DriverManager.fetchDriver(sBrowserType);
 
 		baseUrl = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
